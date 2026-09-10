@@ -149,6 +149,15 @@ class GithubTriageCalibrateCommand extends Command
         }
 
         [$predictions, $failures] = $this->evaluate($heldOut, $output);
+        if ($predictions === []) {
+            $output->writeln(sprintf(
+                '<error>All %d items failed to classify - nothing was scored.</error>',
+                count($heldOut)
+            ));
+
+            return Command::FAILURE;
+        }
+
         $report = $this->score($heldOut, $predictions, $failures);
 
         $path = (string) $input->getOption('report');
@@ -376,6 +385,9 @@ class GithubTriageCalibrateCommand extends Command
                     $this->renderForEval($issue)
                 );
             } catch (\RuntimeException $e) {
+                // Printed, not swallowed: a run that scores nothing has to say
+                // why, or the report reads "No issues scored" with no cause.
+                $output->writeln('    <error>' . $e->getMessage() . '</error>');
                 ++$failures;
 
                 continue;
