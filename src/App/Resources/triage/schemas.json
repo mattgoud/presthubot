@@ -104,11 +104,10 @@
         },
         "duplicate_candidates": {
           "type": "array",
-          "maxItems": 3,
           "items": {
             "type": "integer"
           },
-          "description": "Issue numbers taken ONLY from the candidate list supplied in the user message."
+          "description": "Up to three issue numbers, taken ONLY from the candidate list supplied in the user message. Empty when none match."
         },
         "needs_human_now": {
           "type": "boolean",

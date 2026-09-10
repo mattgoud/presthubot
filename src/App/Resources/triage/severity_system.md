@@ -241,8 +241,9 @@ rather than forcing a fit.
 
 **`duplicate_candidates`** — you are given a list of similar open issues. Return
 only numbers from that list, and only when the other issue describes the *same
-underlying defect* — not merely the same screen or the same module. Return an
-empty list when unsure. Never write a number that was not in the candidate list.
+underlying defect* — not merely the same screen or the same module. **Return at
+most three**, closest first. Return an empty list when unsure. Never write a
+number that was not in the candidate list.
 
 **`looks_like_regression`** — true when the report says the behaviour used to
 work and now does not: "worked in 9.1.4, broken in 9.1.5", "since upgrading to

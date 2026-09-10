@@ -438,9 +438,12 @@ class Renderer
                 . 'matches — and a duplicate sharing no title keywords will not appear here.';
             $out[] = '';
             foreach ($withDuplicates as $item) {
+                // Capped here rather than in the schema: structured outputs
+                // reject maxItems, so the limit is a prompt instruction and
+                // this is what makes it hold.
                 $numbers = array_map(
                     fn ($n): string => '#' . $n,
-                    $item['verdict']['duplicate_candidates']
+                    array_slice($item['verdict']['duplicate_candidates'], 0, 3)
                 );
                 $out[] = sprintf(
                     '- [#%d](%s) %s — possibly the same as %s',
